@@ -1,0 +1,22 @@
+<div class="header-arrow">
+  <button class="bg-transparent" mat-icon-button  (click)="goHome()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <h3>
+    Se connecter
+  </h3>
+</div>
+<form class="login-form" [formGroup]="form" (ngSubmit)="submit()">
+  <div fxLayoutAlign="center center">
+    <div fxLayout="column">
+      <mat-label>E-mail</mat-label>
+      <mat-form-field appearance="outline">
+        <input matInput formControlName="email">
+      </mat-form-field>
+    </div>
+  </div>
+  <div fxLayout fxLayoutAlign="center center">
+    <button class="skyblue-button" mat-raised-button type="submit" [disabled]="form.invalid">Se connecter</button>
+  </div>
+  <p *ngIf="onError" class="error">{{errorMessage}}</p>
+</form>
