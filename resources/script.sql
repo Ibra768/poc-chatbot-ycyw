@@ -16,17 +16,10 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Current Database: `your_car_your_way`
---
-
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `your_car_your_way` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-
-USE `your_car_your_way`;
-
---
 -- Table structure for table `agency`
 --
 
+DROP TABLE IF EXISTS `agency`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `agency` (
@@ -41,57 +34,19 @@ CREATE TABLE `agency` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `conversation`
+-- Dumping data for table `agency`
 --
 
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `conversation` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `status` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `conversation_conversation_status_id_fk` (`status`),
-  CONSTRAINT `conversation_conversation_status_id_fk` FOREIGN KEY (`status`) REFERENCES `conversation_status` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `conversation_status`
---
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `conversation_status` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `message`
---
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `message` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `conversation` int DEFAULT NULL,
-  `user` int DEFAULT NULL,
-  `content` text,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `message_conversation_id_fk` (`conversation`),
-  KEY `message_user_id_fk` (`user`),
-  CONSTRAINT `message_conversation_id_fk` FOREIGN KEY (`conversation`) REFERENCES `conversation` (`id`),
-  CONSTRAINT `message_user_id_fk` FOREIGN KEY (`user`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+LOCK TABLES `agency` WRITE;
+/*!40000 ALTER TABLE `agency` DISABLE KEYS */;
+/*!40000 ALTER TABLE `agency` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `offer`
 --
 
+DROP TABLE IF EXISTS `offer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `offer` (
@@ -114,66 +69,83 @@ CREATE TABLE `offer` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `offer`
+--
+
+LOCK TABLES `offer` WRITE;
+/*!40000 ALTER TABLE `offer` DISABLE KEYS */;
+/*!40000 ALTER TABLE `offer` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `rental`
 --
 
+DROP TABLE IF EXISTS `rental`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `rental` (
   `id` int NOT NULL,
   `offer` int DEFAULT NULL,
-  `user` int DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `username` varchar(255) DEFAULT NULL,
+  `user` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `rental_offer_id_fk` (`offer`),
-  KEY `rental_user_id_fk` (`user`),
+  KEY `rental_user_username_fk` (`user`),
   CONSTRAINT `rental_offer_id_fk` FOREIGN KEY (`offer`) REFERENCES `offer` (`id`),
-  CONSTRAINT `rental_user_id_fk` FOREIGN KEY (`user`) REFERENCES `user` (`id`)
+  CONSTRAINT `rental_user_username_fk` FOREIGN KEY (`user`) REFERENCES `user` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rental`
+--
+
+LOCK TABLES `rental` WRITE;
+/*!40000 ALTER TABLE `rental` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rental` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `user`
 --
 
+DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) NOT NULL,
   `last_name` varchar(255) DEFAULT NULL,
   `first_name` varchar(255) DEFAULT NULL,
   `birth_date` date DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
-  `role` int DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
   `adress` text,
   `zipcode` int DEFAULT NULL,
   `city` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `user_user_role_id_fk` (`role`),
-  CONSTRAINT `user_user_role_id_fk` FOREIGN KEY (`role`) REFERENCES `user_role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `user_role`
+-- Dumping data for table `user`
 --
 
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user_role` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES ('Lea76','Lefrançois','Lea','1993-10-15','lea76@gmail.com','$2a$10$ybp/lOzgRCewzox6lOcnz.0XQqlXEpJsl/p0XPkUkUCMEAtLqz90S',NULL,NULL,NULL,'2024-10-27 19:21:41','2024-10-27 19:31:39'),('Micka27','Dubois','Mickael','1983-10-13','mickael.dubois@gmail.com','$2a$10$ybp/lOzgRCewzox6lOcnz.0XQqlXEpJsl/p0XPkUkUCMEAtLqz90S',NULL,NULL,NULL,'2024-10-27 19:21:41','2024-10-27 19:31:39');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `vehicle`
 --
 
+DROP TABLE IF EXISTS `vehicle`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `vehicle` (
@@ -194,9 +166,19 @@ CREATE TABLE `vehicle` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `vehicle`
+--
+
+LOCK TABLES `vehicle` WRITE;
+/*!40000 ALTER TABLE `vehicle` DISABLE KEYS */;
+/*!40000 ALTER TABLE `vehicle` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `vehicle_category`
 --
 
+DROP TABLE IF EXISTS `vehicle_category`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `vehicle_category` (
@@ -205,3 +187,23 @@ CREATE TABLE `vehicle_category` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `vehicle_category`
+--
+
+LOCK TABLES `vehicle_category` WRITE;
+/*!40000 ALTER TABLE `vehicle_category` DISABLE KEYS */;
+/*!40000 ALTER TABLE `vehicle_category` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2024-10-28 20:57:51

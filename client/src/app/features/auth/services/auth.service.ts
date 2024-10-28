@@ -28,6 +28,11 @@ export class AuthService {
     return sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user') as string).token : null;
   }
 
+  public getUsername(): string | null {
+    const user = sessionStorage.getItem('user');
+    return user ? JSON.parse(user).username : null;
+  }
+
   /**
    * Save user credentials
    * @param sessionInformation

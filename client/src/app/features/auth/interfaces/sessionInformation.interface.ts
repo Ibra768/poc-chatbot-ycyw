@@ -1,7 +1,7 @@
 export interface SessionInformation {
   id: number;
-  firstName: string;
-  lastName: string;
   token: string;
-  role: string;
+  email: string;
+  first_name: string;
+  last_name: string;
 }
