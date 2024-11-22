@@ -1,0 +1,25 @@
+<div class="container mt-5">
+  <div class="col-md-6 m-auto">
+    <ul class="list-group list-group-flush" *ngFor="let message of messages">
+      <li class="list-group-item" aria-current="true">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1"></h5>
+          <small>{{message.send_at|date:'HH:mm'}}</small>
+        </div>
+        <p class="mb-1 {{message.username == getUsername() ? 'text-right' : ''}}">{{message.content}}</p>
+        <small class="text-muted">{{message.username !== getUsername() ? message.username : ''}}</small>
+      </li>
+    </ul>
+    <form class="login-form" [formGroup]="form" (ngSubmit)="submit()">
+      <div class="input-group mb-3">
+        <input
+          formControlName="content"
+          type="text"
+          class="form-control"
+          placeholder="Saisissez votre message"
+        >
+        <button class="btn btn-outline-primary" type="submit" [disabled]="form.invalid">Envoyer</button>
+      </div>
+    </form>
+  </div>
+</div>
